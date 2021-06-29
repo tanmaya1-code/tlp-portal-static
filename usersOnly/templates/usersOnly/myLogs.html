@@ -1,0 +1,80 @@
+{% extends "main/base.html" %}
+
+{% block title %}
+    Tutor Logs
+{% endblock title %}    
+
+
+{% block style %}
+
+  @media screen and (min-width: 1060px){
+
+
+    .student-table{
+      width:900px;
+      margin: auto;
+      padding: 50px;
+      border: 1px solid black;
+      border-radius: 25px;
+      background: #fff;
+    }
+
+    
+  }
+{% endblock style %}
+
+
+{% block body %}
+<a href="/"><button type="button" class="btn btn-success mb-4">Back</button></a>
+<div class= "student-table">
+    <label for= "tutor-intro"> Attendence Logs by
+    <h1 id="tutor-intro"> {{user.first_name}} {{user.last_name}} </h1>
+    </label>
+    <table class="table">
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">Student</th>
+        <th scope="col">Date</th>
+        <th scope="col">Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in logs %}
+        <tr>
+        <th scope="row" class="index"></th>
+        <td>{{log.student}}</td>
+        <td>{{log.date}}</td>
+        <td>{{log.time}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+
+    <div class="card">
+        <div class="card-body">
+            If you've made an error, do reach out to <b>Tanmay</b> for correction.
+        </div>
+    </div>  
+</div> <!--student-table-->
+{% endblock body %}
+
+
+{% block script %}
+  indexTable = (t)=> {
+  indexes= t.getElementsByClassName("index");
+  for (let i=1; i<=indexes.length; i++){
+    indexes[i-1].innerHTML= i;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  tables= document.getElementsByTagName("table")
+  for (let i=0; i<tables.length; i++){
+    indexTable(tables[i]);
+  }
+});
+
+{% endblock script %}
+
+    

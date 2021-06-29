@@ -1,0 +1,163 @@
+{% extends "main/base.html" %}
+
+{% block title %}
+    {{student.f_name}} {{student.l_name}}
+{% endblock title %}    
+
+
+{% block style %}
+
+  @media screen and (min-width: 1060px){
+
+
+    .student-table{
+      width:900px;
+      margin: auto;
+      padding: 50px;
+      border: 1px solid black;
+      border-radius: 25px;
+      background: #fff;
+    }
+
+    
+  }
+{% endblock style %}
+
+
+{% block body %}
+<a href="/"><button type="button" class="btn btn-success mb-4">Back</button></a>
+<div class= "student-table">
+    
+    <h1 class="display-1">{{student.f_name}} {{student.l_name}}</h1>
+    <hr>
+    
+    <a href="/"><button type="button" class="btn btn-info">{{student.grade}}</button></a>
+    <a href="/"><button type="button" class="btn btn-success">{{student.board}}</button></a>
+    <hr>
+    
+    <div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Present
+        </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tutor</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for log in presences %}
+                    <tr>
+                    <th scope="row" class="index"></th>
+                    <td>{{log.tutor.get_full_name}}</td>
+                    <td>{{log.date}}</td>
+                    <td>{{log.time}}</td>
+
+                    </tr>
+                {% endfor %}
+
+                </tbody>  
+        </table>
+        </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Informed Absences
+        </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tutor</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for log in informed %}
+                    <tr>
+                    <th scope="row" class="index"></th>
+                    <td>{{log.tutor.get_full_name}}</td>
+                    <td>{{log.date}}</td>
+                    <td>{{log.time}}</td>
+
+                    </tr>
+                {% endfor %}
+
+                </tbody>  
+        </table>
+        </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            Uninformed Absences
+        </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col" style="width:20%;">#</th>
+                    <th scope="col" style="width:40%;">Tutor</th>
+                    <th scope="col" style="width:20%;">Date</th>
+                    <th scope="col" style="width:20%;">Time</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for log in uninformed %}
+                    <tr>
+                    <th scope="row" class="index"></th>
+                    <td>{{log.tutor.get_full_name}}</td>
+                    <td>{{log.date}}</td>
+                    <td>{{log.time}}</td>
+
+                    </tr>
+                {% endfor %}
+
+                </tbody>  
+        </table>
+        </div>
+        </div>
+    </div>
+    </div>
+
+</div> <!--student-table-->
+{% endblock body %}
+
+{% block script %}
+  indexTable = (t)=> {
+  indexes= t.getElementsByClassName("index");
+  for (let i=1; i<=indexes.length; i++){
+    indexes[i-1].innerHTML= i;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  tables= document.getElementsByTagName("table")
+  for (let i=0; i<tables.length; i++){
+    indexTable(tables[i]);
+  }
+});
+
+{% endblock script %}
+
+    

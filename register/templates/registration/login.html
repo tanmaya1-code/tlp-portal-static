@@ -1,0 +1,49 @@
+{% extends "main/base.html" %}
+
+{% block title %}
+Login
+{% endblock %}
+{% load crispy_forms_tags %}
+{% block style %}
+
+  @media screen and (min-width: 1060px){
+
+
+    .student-table{
+      width:900px;
+      margin: auto;
+      padding: 50px;
+      border: 1px solid black;
+      border-radius: 25px;
+      background: #fff;
+    }
+
+    
+  }
+{% endblock style %}
+
+{% block body %}
+<a href="/"><button type="button" class="btn btn-success mb-4">Back</button></a>
+
+{% if user.is_authenticated %}
+  <div class= "student-table">
+    <a href="/"><button type="button" class="btn btn-success mb-5">Go Back to Home</button></a>
+    <h1 style="color: green;"> You are logged in already. </h1>
+  </div>
+    
+
+{% else %}
+  <div class="student-table">
+  <form method="post" class="form-group">
+  {% csrf_token %}
+  {{form|crispy}}
+  <button type="submit" class="btn btn-success mb-3 mt-3"> Login </button>
+  <div class="card">
+      <div class="card-body">
+         <p> Forgot Password? Reach out to <b>Tanmay</b> for help </p>
+      </div>
+  </div>
+  </form>
+  </div>
+{% endif %}
+{% endblock %}
